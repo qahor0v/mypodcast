@@ -15,6 +15,8 @@ class NewestBooksBuilderWidget extends StatelessWidget {
 
   final CollectionReference _newest_podcasts =
       FirebaseFirestore.instance.collection("newest_podcasts");
+  HiveDatabase hiveDatabase = new HiveDatabase();
+
 
   /// newest books builder widget
   @override
@@ -217,9 +219,9 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                     ),
                     child: Center(
                       child: GestureDetector(
-                        onTap: () {
-                          HiveDatabase.saveId(podcastId);
-                          print("SAVED: ${HiveDatabase.getId(podcastId)}");
+                        onTap: () async {
+                          hiveDatabase.saveId(podcastId);
+                          print("SAVED: ${await hiveDatabase.getId(podcastId)}");
                         },
                         child: const Icon(
                           IconlyBroken.bookmark,

@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(IconlyBroken.search, color: Color(0xff2F2F2F)),
             onPressed: () {
-              HiveDatabase.getAllId();
+             // HiveDatabase.getAllId();
             },
           ),
         ],
