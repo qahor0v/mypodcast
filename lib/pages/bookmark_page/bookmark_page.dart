@@ -1,18 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ebook_app/services/hive_database.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import '../book_info_page/book_info_page.dart';
 
-class BookmarkPage extends StatefulWidget {
-  static const String id = "bookmark_page";
+class BookmarkPage extends StatelessWidget {
+  BookmarkPage({Key? key}) : super(key: key);
+  final CollectionReference _newest_podcasts =
+      FirebaseFirestore.instance.collection("newest_podcasts");
 
-  const BookmarkPage({Key? key}) : super(key: key);
-
-  @override
-  State<BookmarkPage> createState() => _BookmarkPageState();
-}
-
-class _BookmarkPageState extends State<BookmarkPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,118 +35,118 @@ class _BookmarkPageState extends State<BookmarkPage> {
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (BuildContext context, int index) {
-            return _markedBooksWidget();
-          }),
+      body: StreamBuilder(
+        stream: _newest_podcasts.snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+          if (streamSnapshot.hasData) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: streamSnapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                final DocumentSnapshot documentSnapshot =
+                    streamSnapshot.data!.docs[index];
+                if (HiveDatabase.getId(documentSnapshot.id) ==
+                    documentSnapshot.id) {
+                  return _markedBooks(
+                    "${documentSnapshot["name"]}",
+                    "${documentSnapshot["duration"]}",
+                    "${documentSnapshot["imageLink"]}",
+                    "${documentSnapshot["releaseDate"]}",
+                    "${documentSnapshot["synopsis"]}",
+                    "${documentSnapshot["details"]}",
+                  );
+                }
+              },
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
     );
   }
 
-  Widget _markedBooksWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        decoration: BoxDecoration(
-          // boxShadow: [
-          //   BoxShadow(
-          //     color: Colors.grey.withOpacity(0.5),
-          //     spreadRadius: 2,
-          //     blurRadius: 4,
-          //     offset: Offset(0, 5), // changes position of shadow
-          //   ),
-          // ],
-          borderRadius: BorderRadius.circular(8),
-          color: Color(0xffF5EFE1),
-          //color: Colors.black54,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
+  Widget _markedBooks(String name, String duration, String imageLink,
+      String releaseDate, String synopsis, String details) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+          BookInfoPage(
+            name: name,
+            duration: duration,
+            imageLink: imageLink,
+            releaseDate: releaseDate,
+            synopsis: synopsis,
+            details: details,
+          ),
+        );
+      },
+      child: Padding(
+        padding:
+            const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
+        child: ClipRRect(
           child: Container(
-            height: Get.height * 0.18,
             child: Row(
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      right: 12,
-                    ),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        //color: Colors.red,
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/3.png"),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10),
-                        ),
-                      ),
-                    ),
+                Container(
+                  height: 65,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(imageLink), fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 5),
-                    child: Container(
-                      //color: Colors.red,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "The Republic",
-                            style: TextStyle(
-                                color: Color(0xff2F2F2F),
-                                fontSize: 19,
-                                fontFamily: "PlayfairDisplay-VariableFont",
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "By Plato",
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            "2h 24 m",
-                            style: TextStyle(
-                                color: Color(0xff2F2F2F),
-                                fontSize: 17,
-                                fontFamily: "PlayfairDisplay-VariableFont",
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                const SizedBox(
+                  width: 10,
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        //Get.to(BookInfoPage());
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 5, bottom: 5, left: 15, right: 15),
-                        margin: EdgeInsets.only(top: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Color(0xff2F2F2F),
-                        ),
-                        child: const Text(
-                          "Listen",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                    Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xff2F2F2F),
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "PlayfairDisplay-VariableFont",
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    const Text("Derek Collins"),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Row(
+                      children: const [
+                        Icon(
+                          IconlyBroken.star,
+                          size: 17,
+                        ),
+                        Icon(
+                          IconlyBroken.star,
+                          size: 17,
+                        ),
+                        Icon(
+                          IconlyBroken.star,
+                          size: 17,
+                        ),
+                        Icon(
+                          IconlyBroken.star,
+                          size: 17,
+                        ),
+                        Icon(
+                          IconlyBroken.star,
+                          size: 17,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                      ],
                     ),
                   ],
                 ),

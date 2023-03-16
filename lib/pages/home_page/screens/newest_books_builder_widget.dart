@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/pages/book_info_page/book_info_page.dart';
+import 'package:ebook_app/services/hive_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -217,7 +218,8 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                     child: Center(
                       child: GestureDetector(
                         onTap: () {
-                          print("PODCAST ID: $podcastId +++++++");
+                          HiveDatabase.saveId(podcastId);
+                          print("SAVED: ${HiveDatabase.getId(podcastId)}");
                         },
                         child: const Icon(
                           IconlyBroken.bookmark,
