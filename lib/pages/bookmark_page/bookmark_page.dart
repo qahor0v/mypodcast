@@ -7,12 +7,17 @@ import '../book_info_page/book_info_page.dart';
 
 class BookmarkPage extends StatelessWidget {
   BookmarkPage({Key? key}) : super(key: key);
+
   final CollectionReference _newest_podcasts =
       FirebaseFirestore.instance.collection("newest_podcasts");
-  HiveDatabase hiveDatabase = new HiveDatabase();
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Color(0xffFBF8F2),
       appBar: AppBar(
@@ -48,7 +53,7 @@ class BookmarkPage extends StatelessWidget {
                 final DocumentSnapshot documentSnapshot =
                     streamSnapshot.data!.docs[index];
 
-                if (hiveDatabase.getId(documentSnapshot.id) ==
+                if (HiveDatabase.getId(documentSnapshot.id) ==
                     documentSnapshot.id) {
                   return _markedBooks(
                     "${documentSnapshot["name"]}",

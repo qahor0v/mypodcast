@@ -220,8 +220,8 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                     child: Center(
                       child: GestureDetector(
                         onTap: () async {
-                          hiveDatabase.saveId(podcastId);
-                          print("SAVED: ${await hiveDatabase.getId(podcastId)}");
+                          HiveDatabase.saveId(podcastId);
+                          print("SAVED: ${await HiveDatabase.getId(podcastId)}");
                         },
                         child: const Icon(
                           IconlyBroken.bookmark,

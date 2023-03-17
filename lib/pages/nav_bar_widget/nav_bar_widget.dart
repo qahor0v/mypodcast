@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:ebook_app/pages/account_page/account_page.dart';
-import 'package:ebook_app/pages/bookmark_page/bookmark_page.dart';
+import 'package:ebook_app/pages/bookmark_page/bookmark_page2.dart';
 import 'package:ebook_app/pages/books_page/books_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +31,8 @@ class _NavBarWidgetState extends State<NavBarWidget> {
         children:  [
           HomePage(),
           BooksPage(),
-          BookmarkPage(),
+          BookmarkPage2(),
+          //BookmarkPage(),
           AccountPage(),
         ],
         onPageChanged: (int index) {
