@@ -40,7 +40,9 @@ class PopularBooksWidget extends StatelessWidget {
             );
           }
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              color: Color(0xffBFA054),
+            ),
           );
         },
       ),
