@@ -1,10 +1,9 @@
 import 'dart:ui';
 import 'package:ebook_app/pages/account_page/account_page.dart';
-import 'package:ebook_app/pages/bookmark_page/bookmark_page2.dart';
+import 'package:ebook_app/pages/bookmark_page/bookmark_page.dart';
 import 'package:ebook_app/pages/books_page/books_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconly/iconly.dart';
 
 import '../home_page/home_page.dart';
@@ -28,11 +27,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
       backgroundColor: Colors.transparent,
       body: PageView(
         controller: pageController,
-        children:  [
+        children: [
           HomePage(),
           BooksPage(),
-          BookmarkPage2(),
-          //BookmarkPage(),
+          BookmarkPage(),
           AccountPage(),
         ],
         onPageChanged: (int index) {
@@ -51,7 +49,8 @@ class _NavBarWidgetState extends State<NavBarWidget> {
   /// bottom navigation bar widget
   Widget navBar() {
     return ClipRRect(
-      borderRadius: BorderRadius.only(topLeft: Radius.circular(5),topRight:Radius.circular(5)),
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(5), topRight: Radius.circular(5)),
       child: BackdropFilter(
         filter: ImageFilter.blur(
           sigmaY: 10,
@@ -66,9 +65,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                 const Color(0xffffffff).withOpacity(0.3),
               ],
             ),
-
           ),
-
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -94,9 +91,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                   });
                 },
                 child: Icon(
-                  currentIndex == 1
-                      ? IconlyBold.bag
-                      : IconlyLight.bag,
+                  currentIndex == 1 ? IconlyBold.bag : IconlyLight.bag,
                   color: currentIndex == 1 ? Color(0xff2F2F2F) : Colors.grey,
                   size: currentIndex == 1 ? 30 : 28,
                 ),
@@ -109,7 +104,9 @@ class _NavBarWidgetState extends State<NavBarWidget> {
                   });
                 },
                 child: Icon(
-                  currentIndex == 2 ? IconlyBold.bookmark : IconlyLight.bookmark,
+                  currentIndex == 2
+                      ? IconlyBold.bookmark
+                      : IconlyLight.bookmark,
                   color: currentIndex == 2 ? Color(0xff2F2F2F) : Colors.grey,
                   size: currentIndex == 2 ? 30 : 28,
                 ),

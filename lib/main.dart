@@ -1,15 +1,15 @@
+import 'package:ebook_app/pages/lottie_page/lottie_page.dart';
 import 'package:ebook_app/pages/nav_bar_widget/nav_bar_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
-  await Hive.openBox("podcast_id");
+  await Hive.openBox<String>("podcast_id");
   runApp(const MyApp());
 }
 
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const NavBarWidget(),
+      home: const LottiePage(),
       routes: {
         NavBarWidget.id: (context) => NavBarWidget(),
       },

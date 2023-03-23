@@ -28,6 +28,8 @@ class TechnologyScreen extends StatelessWidget {
                     "${documentSnapshot["name"]}",
                     "${documentSnapshot["duration"]}",
                     "${documentSnapshot["imageLink"]}",
+                    "${documentSnapshot["pdfLink"]}",
+                    "${documentSnapshot["audioLink"]}",
                     "${documentSnapshot["releaseDate"]}",
                     "${documentSnapshot["synopsis"]}",
                     "${documentSnapshot["details"]}",
@@ -50,8 +52,15 @@ class TechnologyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPodcastCard(String name, String duration, String imageLink,
-      String releaseDate, String synopsis, String details) {
+  Widget _buildPodcastCard(
+      String name,
+      String duration,
+      String imageLink,
+      String pdfLink,
+      String audioLink,
+      String releaseDate,
+      String synopsis,
+      String details) {
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -59,6 +68,8 @@ class TechnologyScreen extends StatelessWidget {
             name: name,
             duration: duration,
             imageLink: imageLink,
+            pdfLink: pdfLink,
+            audioLink: audioLink,
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,

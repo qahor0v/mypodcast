@@ -19,6 +19,7 @@ class PopularBooksWidget extends StatelessWidget {
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData) {
             return ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: streamSnapshot.data!.docs.length,
@@ -29,6 +30,8 @@ class PopularBooksWidget extends StatelessWidget {
                   "${documentSnapshot["name"]}",
                   "${documentSnapshot["duration"]}",
                   "${documentSnapshot["imageLink"]}",
+                  "${documentSnapshot["pdfLink"]}",
+                  "${documentSnapshot["audioLink"]}",
                   "${documentSnapshot["releaseDate"]}",
                   "${documentSnapshot["synopsis"]}",
                   "${documentSnapshot["details"]}",
@@ -44,7 +47,7 @@ class PopularBooksWidget extends StatelessWidget {
     );
   }
 
-  Widget _topBooksWidget(String name, String duration, String imageLink,
+  Widget _topBooksWidget(String name, String duration, String imageLink, String pdfLink, String audioLink,
       String releaseDate, String synopsis, String details) {
     return GestureDetector(
       onTap: () {
@@ -53,6 +56,8 @@ class PopularBooksWidget extends StatelessWidget {
             name: name,
             duration: duration,
             imageLink: imageLink,
+            pdfLink: pdfLink,
+            audioLink: audioLink,
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,

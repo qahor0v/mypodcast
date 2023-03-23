@@ -5,10 +5,8 @@ import 'package:ebook_app/pages/book_info_page/screens/synopsis_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-
 import '../../controllers/pdf_opener/pdf_opener.dart';
 import '../audio_with_pdf_page/audio_with_pdf_viewer_page.dart';
-import '../nav_bar_widget/nav_bar_widget.dart';
 import '../pdf_viewer_page/pdf_viewer_page.dart';
 
 class BookInfoPage extends StatelessWidget {
@@ -16,19 +14,23 @@ class BookInfoPage extends StatelessWidget {
   String? name;
   String? duration;
   String? imageLink;
+  String? pdfLink;
+  String? audioLink;
   String? releaseDate;
   String? synopsis;
   String? details;
 
-  BookInfoPage(
-      {Key? key,
-      required this.name,
-      required this.duration,
-      required this.imageLink,
-      required this.releaseDate,
-      required this.synopsis,
-      this.details})
-      : super(key: key);
+  BookInfoPage({
+    Key? key,
+    required this.name,
+    required this.duration,
+    required this.imageLink,
+    required this.pdfLink,
+    required this.audioLink,
+    required this.releaseDate,
+    required this.synopsis,
+    required this.details,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class BookInfoPage extends StatelessWidget {
             color: Color(0xff2F2F2F),
           ),
           onPressed: () {
-            Get.to(const NavBarWidget());
+            Get.back();
           },
         ),
         actions: [
@@ -53,7 +55,7 @@ class BookInfoPage extends StatelessWidget {
           ),
         ],
         title: const Text(
-          "Book Info",
+          "Podcast Info",
           style: TextStyle(
               fontSize: 20,
               color: Color(0xff2F2F2F),
@@ -72,8 +74,11 @@ class BookInfoPage extends StatelessWidget {
           Obx(
             () => Container(
               child: complated.value
-                  ? SizedBox.shrink()
-                  : Center(child: CircularProgressIndicator()),
+                  ? const SizedBox.shrink()
+                  : const Center(
+                      child: CircularProgressIndicator(
+                      color: Color(0xffBFA054),
+                    )),
             ),
           ),
         ],
@@ -304,11 +309,13 @@ class BookInfoPage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       complated.value = false;
+                      PDFOpener.url = pdfLink;
                       Get.to(
                         PDFViewerPage(
                           file: await PDFOpener.openMe(),
                         ),
                       );
+                      complated.value = true;
                     },
                     child: Container(
                       height: 50,
@@ -342,8 +349,10 @@ class BookInfoPage extends StatelessWidget {
                       Get.to(
                         AudioWithPdfPage(
                           file: await PDFOpener.openMe(),
+                          audioLink: await audioLink.toString(),
                         ),
                       );
+                      complated.value = true;
                     },
                     child: Container(
                       height: 50,

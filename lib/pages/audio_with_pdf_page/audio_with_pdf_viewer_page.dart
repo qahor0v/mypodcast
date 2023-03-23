@@ -12,10 +12,12 @@ import '../../controllers/music_payer/music_payer_controller.dart';
 import '../../controllers/music_payer/music_position_data.dart';
 
 class AudioWithPdfPage extends StatefulWidget {
-  static const String id = "pdf_viewer_page";
   final File file;
+  final String audioLink;
 
-  const AudioWithPdfPage({Key? key, required this.file}) : super(key: key);
+  const AudioWithPdfPage(
+      {Key? key, required this.file, required this.audioLink})
+      : super(key: key);
 
   @override
   State<AudioWithPdfPage> createState() => _AudioWithPdfPageState();
@@ -24,9 +26,22 @@ class AudioWithPdfPage extends StatefulWidget {
 class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
   late PDFViewController controller;
   late AudioPlayer _audioPlayer;
-
   int pages = 0;
   int indexPage = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _audioPlayer = AudioPlayer()..setUrl(widget.audioLink);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _audioPlayer.dispose();
+  }
 
   Stream<MusicPositionData> get _positionDataStream => rxdart.Rx.combineLatest3(
         _audioPlayer.positionStream,
@@ -40,38 +55,29 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
       );
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _audioPlayer = AudioPlayer()..setAsset("assets/audios/zivert.mp3");
-    ///..setUrl("")
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _audioPlayer.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final name = basename(widget.file.path);
     final text = "${indexPage + 1} of $pages";
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff2F2F2F),
+        backgroundColor: const Color(0xff2F2F2F),
         leading: IconButton(
           onPressed: () {
-            //Get.offAll(BookInfoPage());
+            Get.back();
           },
-          icon: Icon(IconlyBroken.arrow_left,color: Color(0xffBFA054),),
+          icon: const Icon(
+            IconlyBroken.arrow_left,
+            color: Color(0xffBFA054),
+          ),
         ),
         actions: [
           Center(
             child: Text(
               text,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16,color: Color(0xffBFA054)),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Color(0xffBFA054)),
             ),
           ),
           IconButton(
@@ -80,7 +86,8 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
               controller.setPage(page);
             },
             icon: const Icon(
-              IconlyBroken.arrow_left,color: Color(0xffBFA054),
+              IconlyBroken.arrow_left,
+              color: Color(0xffBFA054),
             ),
           ),
           IconButton(
@@ -88,12 +95,14 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
               final page = indexPage == pages - 1 ? 0 : indexPage + 1;
               controller.setPage(page);
             },
-            icon: Icon(
-              IconlyBroken.arrow_right,color: Color(0xffBFA054)
-            ),
+            icon:
+                const Icon(IconlyBroken.arrow_right, color: Color(0xffBFA054)),
           ),
         ],
-        title: Text(name,style: TextStyle(color: Color(0xffBFA054)),),
+        title: Text(
+          name,
+          style: const TextStyle(color: Color(0xffBFA054)),
+        ),
       ),
       body: Stack(
         children: [
@@ -124,15 +133,15 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
           ),
         ],
       ),
-      floatingActionButton: _audioPlayerWidget1(),
+      floatingActionButton: _audioPlayerWidget(),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
     );
   }
 
-  Widget _audioPlayerWidget1() {
+  Widget _audioPlayerWidget() {
     return ClipRRect(
-      borderRadius: BorderRadius.only(
+      borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(5), topRight: Radius.circular(5)),
       child: BackdropFilter(
         filter: ImageFilter.blur(
@@ -158,13 +167,13 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
                 builder: (context, snapshot) {
                   final positionData = snapshot.data;
                   return Padding(
-                    padding: const EdgeInsets.only(right: 15,left: 15),
+                    padding: const EdgeInsets.only(right: 15, left: 15),
                     child: ProgressBar(
                       barHeight: 8,
                       baseBarColor: Colors.grey[600],
                       bufferedBarColor: Colors.grey,
-                      progressBarColor: Color(0xffFBF8F2),
-                      thumbColor: Color(0xffBFA054),
+                      progressBarColor: const Color(0xffFBF8F2),
+                      thumbColor: const Color(0xffBFA054),
                       timeLabelTextStyle: const TextStyle(
                         color: Colors.black54,
                         fontWeight: FontWeight.w600,
@@ -185,12 +194,12 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
                       children: [
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             IconlyBroken.arrow_left_circle,
                             size: 40,
                           ),
                         ),
-                        Text("10 sec"),
+                        const Text("10 sec"),
                       ],
                     ),
                   ),
@@ -210,12 +219,12 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
                       children: [
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(
+                          icon: const Icon(
                             IconlyBroken.arrow_right_circle,
                             size: 40,
                           ),
                         ),
-                        Text("10 sec"),
+                        const Text("10 sec"),
                       ],
                     ),
                   ),

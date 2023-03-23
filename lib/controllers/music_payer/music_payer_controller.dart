@@ -3,7 +3,6 @@ import 'package:iconly/iconly.dart';
 import 'package:just_audio/just_audio.dart';
 
 class MusicPlayerController extends StatelessWidget {
-  static const String id = "music_player";
   final AudioPlayer audioplayer;
 
   const MusicPlayerController({Key? key, required this.audioplayer})

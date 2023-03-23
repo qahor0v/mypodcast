@@ -45,6 +45,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                       "${documentSnapshot["duration"]}",
                       "${documentSnapshot["imageLink"]}",
                       "${documentSnapshot["pdfLink"]}",
+                      "${documentSnapshot["audioLink"]}",
                       "${documentSnapshot["releaseDate"]}",
                       "${documentSnapshot["synopsis"]}",
                       "${documentSnapshot["details"]}",
@@ -70,6 +71,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
       String duration,
       String imageLink,
       String pdfLink,
+      String audioLink,
       String releaseDate,
       String synopsis,
       String details,
@@ -95,9 +97,11 @@ class NewestBooksBuilderWidget extends StatelessWidget {
             Get.to(BookInfoPage(
               name: name,
               duration: duration,
+              imageLink: imageLink,
+              pdfLink: pdfLink,
+              audioLink: audioLink,
               releaseDate: releaseDate,
               synopsis: synopsis,
-              imageLink: imageLink,
               details: details,
             ));
           },

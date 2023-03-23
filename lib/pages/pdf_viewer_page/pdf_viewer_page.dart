@@ -6,7 +6,6 @@ import 'package:iconly/iconly.dart';
 import 'package:path/path.dart';
 
 class PDFViewerPage extends StatefulWidget {
-  static const String id = "pdf_viewer_page";
   final File file;
 
   const PDFViewerPage({Key? key, required this.file}) : super(key: key);
