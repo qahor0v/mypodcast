@@ -52,6 +52,7 @@ class PopularBooksWidget extends StatelessWidget {
   Widget _topBooksWidget(String name, String duration, String imageLink, String pdfLink, String audioLink,
       String releaseDate, String synopsis, String details) {
     return GestureDetector(
+      behavior: HitTestBehavior.translucent,
       onTap: () {
         Get.to(
           BookInfoPage(
