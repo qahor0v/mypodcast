@@ -346,6 +346,7 @@ class BookInfoPage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       complated.value = false;
+                      PDFOpener.url = pdfLink;
                       Get.to(
                         AudioWithPdfPage(
                           file: await PDFOpener.openMe(),

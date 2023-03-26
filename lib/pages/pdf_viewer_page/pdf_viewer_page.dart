@@ -53,7 +53,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
               final page = indexPage == pages - 1 ? 0 : indexPage + 1;
               controller.setPage(page);
             },
-            icon: Icon(
+            icon: const Icon(
               IconlyBroken.arrow_right,
             ),
           ),
@@ -61,29 +61,30 @@ class _PDFViewerPageState extends State<PDFViewerPage> {
         title: Text(name),
       ),
       body: Center(
-          child: PDFView(
-        filePath: widget.file.path,
-        //swipeHorizontal: true,
-        pageSnap: false,
-        pageFling: false,
-        autoSpacing: false,
-        //nightMode: true,
-        onRender: (pages) {
-          setState(() {
-            this.pages = pages!;
-          });
-        },
-        onViewCreated: (controller) {
-          setState(() {
-            this.controller = controller;
-          });
-        },
-        onPageChanged: (indexPage, _) {
-          setState(() {
-            this.indexPage = indexPage!;
-          });
-        },
-      )),
+        child: PDFView(
+          filePath: widget.file.path,
+          //swipeHorizontal: true,
+          pageSnap: false,
+          pageFling: false,
+          autoSpacing: false,
+          //nightMode: true,
+          onRender: (pages) {
+            setState(() {
+              this.pages = pages!;
+            });
+          },
+          onViewCreated: (controller) {
+            setState(() {
+              this.controller = controller;
+            });
+          },
+          onPageChanged: (indexPage, _) {
+            setState(() {
+              this.indexPage = indexPage!;
+            });
+          },
+        ),
+      ),
     );
   }
 }
