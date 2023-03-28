@@ -9,7 +9,8 @@ class PodcastModel {
   String? imageLink;
 
   PodcastModel(
-      {required this.name,
+      {
+      required this.name,
       required this.releaseDate,
       required this.synopsis,
       required this.details,

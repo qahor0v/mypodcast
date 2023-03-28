@@ -33,6 +33,7 @@ class PoliticsScreen extends StatelessWidget {
                     "${documentSnapshot["releaseDate"]}",
                     "${documentSnapshot["synopsis"]}",
                     "${documentSnapshot["details"]}",
+                    documentSnapshot.id,
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -53,14 +54,16 @@ class PoliticsScreen extends StatelessWidget {
   }
 
   Widget _buildPodcastCard(
-      String name,
-      String duration,
-      String imageLink,
-      String pdfLink,
-      String audioLink,
-      String releaseDate,
-      String synopsis,
-      String details) {
+    String name,
+    String duration,
+    String imageLink,
+    String pdfLink,
+    String audioLink,
+    String releaseDate,
+    String synopsis,
+    String details,
+    String podcastId,
+  ) {
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -73,6 +76,7 @@ class PoliticsScreen extends StatelessWidget {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
+            podcastId: podcastId,
           ),
         );
       },

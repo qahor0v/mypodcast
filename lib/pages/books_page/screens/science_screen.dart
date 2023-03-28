@@ -33,6 +33,7 @@ class ScienceScreen extends StatelessWidget {
                     "${documentSnapshot["releaseDate"]}",
                     "${documentSnapshot["synopsis"]}",
                     "${documentSnapshot["details"]}",
+                    "${documentSnapshot.id}",
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -60,7 +61,8 @@ class ScienceScreen extends StatelessWidget {
       String audioLink,
       String releaseDate,
       String synopsis,
-      String details) {
+      String details,
+      String podcastId) {
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -73,6 +75,7 @@ class ScienceScreen extends StatelessWidget {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
+            podcastId: podcastId,
           ),
         );
       },

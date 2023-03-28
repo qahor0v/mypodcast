@@ -103,6 +103,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
               releaseDate: releaseDate,
               synopsis: synopsis,
               details: details,
+              podcastId: podcastId,
             ));
           },
           child: Container(
@@ -226,6 +227,12 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                         onTap: () async {
                           HiveDatabase.saveId(podcastId);
                           print("SAVED: ${await HiveDatabase.getId(podcastId)}");
+                          Get.snackbar(
+                            "Added to bookmarks",
+                            "You can listen this podcast in bookmark page",
+                            icon: Icon(IconlyBroken.bookmark, color: Colors.black),
+                            snackPosition: SnackPosition.BOTTOM,
+                          );
                         },
                         child: const Icon(
                           IconlyBroken.bookmark,

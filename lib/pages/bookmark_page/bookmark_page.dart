@@ -103,6 +103,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
+            podcastId: podcastId,
           ),
         );
       },

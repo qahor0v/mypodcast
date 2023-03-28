@@ -1,11 +1,11 @@
 import 'dart:ui';
-
 import 'package:ebook_app/pages/book_info_page/screens/details_screen.dart';
 import 'package:ebook_app/pages/book_info_page/screens/synopsis_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import '../../controllers/pdf_opener/pdf_opener.dart';
+import '../../services/hive_database.dart';
 import '../audio_with_pdf_page/audio_with_pdf_viewer_page.dart';
 import '../pdf_viewer_page/pdf_viewer_page.dart';
 
@@ -19,6 +19,7 @@ class BookInfoPage extends StatelessWidget {
   String? releaseDate;
   String? synopsis;
   String? details;
+  String? podcastId;
 
   BookInfoPage({
     Key? key,
@@ -30,6 +31,7 @@ class BookInfoPage extends StatelessWidget {
     required this.releaseDate,
     required this.synopsis,
     required this.details,
+    required this.podcastId,
   }) : super(key: key);
 
   @override
@@ -51,7 +53,16 @@ class BookInfoPage extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(IconlyBroken.bookmark, color: Color(0xff2F2F2F)),
-            onPressed: () {},
+            onPressed: () async {
+              HiveDatabase.saveId(podcastId!);
+              print("SAVED: ${await HiveDatabase.getId(podcastId!)}");
+              Get.snackbar(
+                "Added to bookmarks",
+                "You can listen this podcast in bookmark page",
+                icon: Icon(IconlyBroken.bookmark, color: Colors.black),
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            },
           ),
         ],
         title: const Text(
@@ -103,7 +114,6 @@ class BookInfoPage extends StatelessWidget {
               children: [
                 Container(
                   width: Get.width,
-                  //MediaQuery.of(context).size.width,
                   height: Get.height * 0.28,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),

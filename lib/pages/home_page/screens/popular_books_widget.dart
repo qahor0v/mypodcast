@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/pages/book_info_page/book_info_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconly/iconly.dart';
 
 class PopularBooksWidget extends StatelessWidget {
   static const String id = "popular_books_widget";
@@ -35,6 +34,7 @@ class PopularBooksWidget extends StatelessWidget {
                   "${documentSnapshot["releaseDate"]}",
                   "${documentSnapshot["synopsis"]}",
                   "${documentSnapshot["details"]}",
+                  documentSnapshot.id,
                 );
               },
             );
@@ -49,8 +49,15 @@ class PopularBooksWidget extends StatelessWidget {
     );
   }
 
-  Widget _topBooksWidget(String name, String duration, String imageLink, String pdfLink, String audioLink,
-      String releaseDate, String synopsis, String details) {
+  Widget _topBooksWidget(
+      String name,
+      String duration,
+      String imageLink,
+      String pdfLink,
+      String audioLink,
+      String releaseDate,
+      String synopsis,
+      String details, String podcastId) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -64,6 +71,7 @@ class PopularBooksWidget extends StatelessWidget {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
+            podcastId: podcastId,
           ),
         );
       },
@@ -101,36 +109,15 @@ class PopularBooksWidget extends StatelessWidget {
                     const SizedBox(
                       height: 3,
                     ),
-                    const Text("Derek Collins"),
+                    Text(
+                      duration,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     const SizedBox(
                       height: 3,
                     ),
-                    Row(
-                      children: const [
-                        Icon(
-                          IconlyBroken.star,
-                          size: 17,
-                        ),
-                        Icon(
-                          IconlyBroken.star,
-                          size: 17,
-                        ),
-                        Icon(
-                          IconlyBroken.star,
-                          size: 17,
-                        ),
-                        Icon(
-                          IconlyBroken.star,
-                          size: 17,
-                        ),
-                        Icon(
-                          IconlyBroken.star,
-                          size: 17,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
+                    const Text(
+                      "Andrew Dalby",
                     ),
                   ],
                 ),

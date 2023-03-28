@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/pages/home_page/screens/indicator_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/name_of_parts_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/newest_books_builder_widget.dart';
@@ -8,8 +7,6 @@ import 'package:iconly/iconly.dart';
 
 class HomePage extends StatelessWidget {
   final controller = PageController();
-  final CollectionReference _newest_podcasts =
-      FirebaseFirestore.instance.collection("newest_podcasts");
 
   HomePage({Key? key}) : super(key: key);
 
@@ -18,10 +15,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xffF5EFE1),
-        leading: Icon(IconlyBroken.heart,color: Color(0xff2F2F2F),),
+        backgroundColor: const Color(0xffF5EFE1),
         actions: [
-
           IconButton(
             icon: const Icon(
               IconlyBroken.notification,
@@ -32,7 +27,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(IconlyBroken.search, color: Color(0xff2F2F2F)),
             onPressed: () {
-             // HiveDatabase.getAllId();
+              // HiveDatabase.getAllId();
             },
           ),
         ],
@@ -52,7 +47,6 @@ class HomePage extends StatelessWidget {
           IndicatorWidget(controller: controller),
           NameOfPartsWidget(name: "Popular Books"),
           PopularBooksWidget(),
-
         ],
       ),
     );

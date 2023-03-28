@@ -2,7 +2,6 @@ import 'package:ebook_app/controllers/add_podcast/add_podcast_controller.dart';
 import 'package:flutter/material.dart';
 
 class AddPodcastPage extends StatefulWidget {
-
   const AddPodcastPage({Key? key}) : super(key: key);
 
   @override
@@ -10,6 +9,15 @@ class AddPodcastPage extends StatefulWidget {
 }
 
 class _AddPodcastPageState extends State<AddPodcastPage> {
+  List<String> items = [
+    "newest_podcasts",
+    "politics_podcasts",
+    "science_podcasts",
+    "technology_podcasts",
+    "top_podcasts"
+  ];
+
+  String? selectedDatabaseTableController = "newest_podcasts";
   TextEditingController nameController = TextEditingController();
   TextEditingController releaseDateController = TextEditingController();
   TextEditingController synopsisController = TextEditingController();
@@ -20,7 +28,8 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
   TextEditingController imageLinkController = TextEditingController();
 
   void _addPodcast() {
-    AddPodcastController _addPodcastController = AddPodcastController();
+    AddPodcastController.selectedDatabaseTableController =
+        selectedDatabaseTableController;
     AddPodcastController.nameController = nameController.text;
     AddPodcastController.releaseDateController = releaseDateController.text;
     AddPodcastController.synopsisController = synopsisController.text;
@@ -29,7 +38,7 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
     AddPodcastController.pdfLinkController = pdfLinkController.text;
     AddPodcastController.audioLinkController = audioLinkController.text;
     AddPodcastController.imageLinkController = imageLinkController.text;
-    _addPodcastController.create();
+    AddPodcastController.create();
     _makeControllersEmpty();
   }
 
@@ -55,8 +64,30 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
           child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black54),
+                  ),
+                ),
+                value: selectedDatabaseTableController,
+                items: items
+                    .map((item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                          ),
+                        ))
+                    .toList(),
+                onChanged: (item) => setState(() {
+                  selectedDatabaseTableController = item;
+                }),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(
