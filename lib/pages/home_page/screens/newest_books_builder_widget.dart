@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/pages/book_info_page/book_info_page.dart';
 import 'package:ebook_app/services/hive_database.dart';
@@ -17,14 +16,12 @@ class NewestBooksBuilderWidget extends StatelessWidget {
       FirebaseFirestore.instance.collection("newest_podcasts");
   HiveDatabase hiveDatabase = new HiveDatabase();
 
-
   /// newest books builder widget
   @override
   Widget build(BuildContext context) {
+
     return SliverAppBar(
       backgroundColor: Color(0xffF5EFE1),
-      //leading: Icon(Icons.menu),
-      //title: Text("AudioBook"),
       expandedHeight: 300,
       floating: false,
       pinned: false,
@@ -226,11 +223,13 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                       child: GestureDetector(
                         onTap: () async {
                           HiveDatabase.saveId(podcastId);
-                          print("SAVED: ${await HiveDatabase.getId(podcastId)}");
+                          print(
+                              "SAVED: ${await HiveDatabase.getId(podcastId)}");
                           Get.snackbar(
                             "Added to bookmarks",
                             "You can listen this podcast in bookmark page",
-                            icon: Icon(IconlyBroken.bookmark, color: Colors.black),
+                            icon: const Icon(IconlyBroken.bookmark,
+                                color: Colors.black),
                             snackPosition: SnackPosition.BOTTOM,
                           );
                         },

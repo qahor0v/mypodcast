@@ -54,6 +54,7 @@ dependencies:
   hive: ^2.0.1
   hive_flutter: ^1.1.0
   lottie: ^2.3.0
+  badges: ^3.0.3
 
 
 dev_dependencies:
@@ -82,7 +83,7 @@ flutter:
     - assets/images/
     - assets/audios/
     - assets/lotties/
-    - assets/logo.png
+    #- assets/logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

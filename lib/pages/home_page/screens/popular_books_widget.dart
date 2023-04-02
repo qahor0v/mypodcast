@@ -57,7 +57,8 @@ class PopularBooksWidget extends StatelessWidget {
       String audioLink,
       String releaseDate,
       String synopsis,
-      String details, String podcastId) {
+      String details,
+      String podcastId) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -78,51 +79,56 @@ class PopularBooksWidget extends StatelessWidget {
       child: Padding(
         padding:
             const EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
-        child: ClipRRect(
-          child: Container(
-            child: Row(
-              children: [
-                Container(
-                  height: 65,
-                  width: 60,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(imageLink), fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(10),
+        child: Container(
+          child: Row(
+            children: [
+              Container(
+                height: 65,
+                width: 60,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(imageLink),
+                    fit: BoxFit.cover,
                   ),
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xff2F2F2F),
-                        fontWeight: FontWeight.bold,
-                        fontFamily: "PlayfairDisplay-VariableFont",
-                      ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff2F2F2F),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "PlayfairDisplay-VariableFont",
                     ),
-                    const SizedBox(
-                      height: 3,
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    duration,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff2F2F2F),
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "PlayfairDisplay-VariableFont",
                     ),
-                    Text(
-                      duration,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 3,
-                    ),
-                    const Text(
-                      "Andrew Dalby",
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  const Text(
+                    "Andrew Dalby",
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

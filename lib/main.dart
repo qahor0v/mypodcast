@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const LottiePage(),
       routes: {
-        NavBarWidget.id: (context) => NavBarWidget(),
+        NavBarWidget.id: (context) => const NavBarWidget(),
       },
     );
   }
