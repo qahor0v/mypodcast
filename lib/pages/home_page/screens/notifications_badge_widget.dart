@@ -1,4 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+<<<<<<< HEAD
+import 'package:ebook_app/services/hivedb_notifications.dart';
+=======
+>>>>>>> github1/master
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -6,6 +10,7 @@ import 'package:badges/badges.dart' as badges;
 import '../../../controllers/notification_visibility/visibility_controller.dart';
 import '../../../services/hivedb_notifications.dart';
 
+<<<<<<< HEAD
 class NotificationsBadgeWidget extends StatefulWidget {
   static const String id = "safgadf";
 
@@ -20,6 +25,22 @@ class _NotificationsBadgeWidgetState extends State<NotificationsBadgeWidget> {
   final CollectionReference newest_podcasts =
       FirebaseFirestore.instance.collection("newest_podcasts");
   var me = HiveDBNotifications.saveFirst();
+=======
+class NotificationsBadge2 extends StatefulWidget {
+  static const String id = "safgadf";
+
+  NotificationsBadge2({Key? key}) : super(key: key);
+
+  @override
+  State<NotificationsBadge2> createState() => _NotificationsBadge2State();
+}
+
+class _NotificationsBadge2State extends State<NotificationsBadge2> {
+  /// variables
+  final CollectionReference newest_podcasts =
+      FirebaseFirestore.instance.collection("newest_podcasts");
+  var me = HiveDBNotifications.saveOne();
+>>>>>>> github1/master
   Iterable<String> ids = HiveDBNotifications.getAllId();
 
   VisibleController vc = Get.put(VisibleController());
@@ -32,6 +53,16 @@ class _NotificationsBadgeWidgetState extends State<NotificationsBadgeWidget> {
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
         if (streamSnapshot.hasData) {
+<<<<<<< HEAD
+
+          for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
+            final DocumentSnapshot documentSnapshot =
+                streamSnapshot.data!.docs[i];
+            HiveDBNotifications.saveId(documentSnapshot.id);
+          }
+
+=======
+>>>>>>> github1/master
           return Obx(
             () => IconButton(
               icon: vc.isVisible.value
@@ -54,9 +85,12 @@ class _NotificationsBadgeWidgetState extends State<NotificationsBadgeWidget> {
                     ),
               onPressed: () {
                 vc.changeVisibility();
+<<<<<<< HEAD
                 for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
                   HiveDBNotifications.saveId(streamSnapshot.data!.docs[i].id);
                 }
+=======
+>>>>>>> github1/master
               },
             ),
           );
