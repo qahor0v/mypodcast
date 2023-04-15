@@ -7,17 +7,19 @@ class PodcastModel {
   String? pdfLink;
   String? audioLink;
   String? imageLink;
+  String? textLink;
 
-  PodcastModel(
-      {
-      required this.name,
-      required this.releaseDate,
-      required this.synopsis,
-      required this.details,
-      required this.duration,
-      required this.pdfLink,
-      required this.audioLink,
-      required this.imageLink});
+  PodcastModel({
+    required this.name,
+    required this.releaseDate,
+    required this.synopsis,
+    required this.details,
+    required this.duration,
+    required this.pdfLink,
+    required this.audioLink,
+    required this.imageLink,
+    required this.textLink,
+  });
 
   PodcastModel.fromJson(Map<String, dynamic> json)
       : name = json['name'],
@@ -27,7 +29,8 @@ class PodcastModel {
         duration = json['duration'],
         pdfLink = json['pdfLink'],
         audioLink = json['audioLink'],
-        imageLink = json['imageLink'];
+        imageLink = json['imageLink'],
+        textLink = json['textLink'];
 
   Map<String, dynamic> toJson() => {
         'name': name,
@@ -38,5 +41,6 @@ class PodcastModel {
         'pdfLink': pdfLink,
         'audioLink': audioLink,
         'imageLink': imageLink,
+        'textLink': textLink,
       };
 }

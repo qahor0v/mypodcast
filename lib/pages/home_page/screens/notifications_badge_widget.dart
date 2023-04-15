@@ -6,20 +6,20 @@ import 'package:badges/badges.dart' as badges;
 import '../../../controllers/notification_visibility/visibility_controller.dart';
 import '../../../services/hivedb_notifications.dart';
 
-class NotificationsBadge2 extends StatefulWidget {
+class NotificationsBadgeWidget extends StatefulWidget {
   static const String id = "safgadf";
 
-  NotificationsBadge2({Key? key}) : super(key: key);
+  NotificationsBadgeWidget({Key? key}) : super(key: key);
 
   @override
-  State<NotificationsBadge2> createState() => _NotificationsBadge2State();
+  State<NotificationsBadgeWidget> createState() => _NotificationsBadgeWidgetState();
 }
 
-class _NotificationsBadge2State extends State<NotificationsBadge2> {
+class _NotificationsBadgeWidgetState extends State<NotificationsBadgeWidget> {
   /// variables
   final CollectionReference newest_podcasts =
       FirebaseFirestore.instance.collection("newest_podcasts");
-  var me = HiveDBNotifications.saveOne();
+  var me = HiveDBNotifications.saveFirst();
   Iterable<String> ids = HiveDBNotifications.getAllId();
 
   VisibleController vc = Get.put(VisibleController());
@@ -54,6 +54,9 @@ class _NotificationsBadge2State extends State<NotificationsBadge2> {
                     ),
               onPressed: () {
                 vc.changeVisibility();
+                for (int i = 0; i < streamSnapshot.data!.docs.length; i++) {
+                  HiveDBNotifications.saveId(streamSnapshot.data!.docs[i].id);
+                }
               },
             ),
           );

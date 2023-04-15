@@ -12,6 +12,7 @@ class AddPodcastController {
   static String? pdfLinkController;
   static String? audioLinkController;
   static String? imageLinkController;
+  static String? textLinkController;
 
   static Future<void> create([DocumentSnapshot? documentSnapshot]) async {
     final CollectionReference databaseTable =
@@ -25,6 +26,7 @@ class AddPodcastController {
       pdfLink: pdfLinkController,
       audioLink: audioLinkController,
       imageLink: imageLinkController,
+      textLink: textLinkController,
     );
     await databaseTable.add(pm.toJson());
   }

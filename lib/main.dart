@@ -1,3 +1,4 @@
+import 'package:ebook_app/pages/home_page/screens/notifications_badge_widget.dart';
 import 'package:ebook_app/pages/lottie_page/lottie_page.dart';
 import 'package:ebook_app/pages/nav_bar_widget/nav_bar_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp();
   await Hive.initFlutter();
   await Hive.openBox<String>("podcast_id");
+  await Hive.openBox<String>("notifications_id");
   runApp(const MyApp());
 }
 
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
       home: const LottiePage(),
       routes: {
         NavBarWidget.id: (context) => const NavBarWidget(),
+        NotificationsBadgeWidget.id: (context) => NotificationsBadgeWidget(),
       },
     );
   }

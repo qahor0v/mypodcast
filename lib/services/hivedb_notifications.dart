@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-class HiveDBNotifications {
-  
+class HiveDBNotifications extends GetxController {
   static Box<String> notifications_box = Hive.box<String>("notifications_id");
 
   static Listenable get podcastListenable => notifications_box.listenable();
 
-  static Future<void> saveId(String id) async {
+  static Future saveId(String id) async {
     return await notifications_box.put(id, id);
   }
-  static Future<void> saveOne() async {
+
+  static Future<void> saveFirst() async {
     return await notifications_box.put(1, "1");
   }
 

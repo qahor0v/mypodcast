@@ -6,6 +6,7 @@ import '../../services/hive_database.dart';
 import '../book_info_page/book_info_page.dart';
 
 class BookmarkPage extends StatefulWidget {
+
   const BookmarkPage({Key? key}) : super(key: key);
 
   @override
