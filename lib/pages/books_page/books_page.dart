@@ -24,7 +24,13 @@ class _BooksPageState extends State<BooksPage> {
           elevation: 0,
           backgroundColor: Color(0xffFBF8F2),
           actions: [
-            
+            IconButton(
+              icon: const Icon(
+                IconlyBroken.notification,
+                color: Color(0xff2F2F2F),
+              ),
+              onPressed: () {},
+            ),
             IconButton(
               icon: const Icon(IconlyBroken.search, color: Color(0xff2F2F2F)),
               onPressed: () {
