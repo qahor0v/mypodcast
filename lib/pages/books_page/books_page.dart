@@ -2,6 +2,7 @@ import 'package:ebook_app/pages/books_page/screens/politics_screen.dart';
 import 'package:ebook_app/pages/books_page/screens/science_screen.dart';
 import 'package:ebook_app/pages/books_page/screens/technology_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 
 class BooksPage extends StatefulWidget {
@@ -38,9 +39,9 @@ class _BooksPageState extends State<BooksPage> {
               },
             ),
           ],
-          title: const Text(
-            "Explore Market",
-            style: TextStyle(
+          title: Text(
+            "All Podcasts".tr,
+            style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xff2F2F2F),
                 fontFamily: "PlayfairDisplay-VariableFont",
@@ -64,11 +65,11 @@ class _BooksPageState extends State<BooksPage> {
                 ),
                 child: Center(
                   child: Row(
-                    children: const [
+                    children: [
                       // Icon(IconlyBroken.bookmark),
                       Text(
-                        "Science",
-                        style: TextStyle(color: Colors.black54),
+                        "Science".tr,
+                        style: const TextStyle(color: Colors.black54),
                       ),
                     ],
                   ),
@@ -84,11 +85,11 @@ class _BooksPageState extends State<BooksPage> {
                 ),
                 child: Center(
                   child: Row(
-                    children: const [
+                    children: [
                       // Icon(IconlyBroken.bookmark),
                       Text(
-                        "Technology",
-                        style: TextStyle(color: Colors.black54),
+                        "Technology".tr,
+                        style: const TextStyle(color: Colors.black54),
                       ),
                     ],
                   ),
@@ -104,11 +105,11 @@ class _BooksPageState extends State<BooksPage> {
                 ),
                 child: Center(
                   child: Row(
-                    children: const [
+                    children: [
                       // Icon(IconlyBroken.bookmark),
                       Text(
-                        "Politics",
-                        style: TextStyle(color: Colors.black54),
+                        "Politics".tr,
+                        style: const TextStyle(color: Colors.black54),
                       ),
                     ],
                   ),

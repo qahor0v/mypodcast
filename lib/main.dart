@@ -1,6 +1,7 @@
 import 'package:ebook_app/pages/home_page/screens/notifications_badge_widget.dart';
 import 'package:ebook_app/pages/lottie_page/lottie_page.dart';
 import 'package:ebook_app/pages/nav_bar_widget/nav_bar_widget.dart';
+import 'package:ebook_app/services/local_strings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      translations: LocalStrings(),
+      locale: const Locale("en","US"),
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
       home: const LottiePage(),
       routes: {
         NavBarWidget.id: (context) => const NavBarWidget(),
-        NotificationsBadgeWidget.id: (context) => NotificationsBadgeWidget(),
+        NotificationsBadge2.id: (context) => NotificationsBadge2(),
       },
     );
   }

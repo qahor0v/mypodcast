@@ -226,8 +226,8 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                           print(
                               "SAVED: ${await HiveDatabase.getId(podcastId)}");
                           Get.snackbar(
-                            "Added to bookmarks",
-                            "You can listen this podcast in bookmark page",
+                            "Added to bookmarks".tr,
+                            "You can listen this podcast in bookmark page".tr,
                             icon: const Icon(IconlyBroken.bookmark,
                                 color: Colors.black),
                             snackPosition: SnackPosition.BOTTOM,

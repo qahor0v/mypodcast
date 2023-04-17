@@ -3,23 +3,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/controllers/notification_visibility/visibility_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../services/hivedb_notifications.dart';
 import '../../book_info_page/book_info_page.dart';
 
 class NotificationsWidget extends GetView {
   final CollectionReference _newest_podcasts =
-      FirebaseFirestore.instance.collection("newest_podcasts");
+  FirebaseFirestore.instance.collection("newest_podcasts");
 
-  Iterable<String> ids = HiveDBNotifications.getAllId();
 
   NotificationsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     VisibleController vv = Get.put(VisibleController());
-    HiveDBNotifications.saveFirst();
     return Obx(
-      () => Visibility(
+          () => Visibility(
         visible: vv.isVisible.value,
         maintainSize: true,
         maintainAnimation: true,
@@ -50,28 +47,13 @@ class NotificationsWidget extends GetView {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      "New podcasts has been added for you!",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                     Text("New podcasts has been added for you!".tr,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                    const SizedBox(height: 5,),
                     StreamBuilder(
-                      stream: _newest_podcasts
-                          .where(FieldPath.documentId, whereNotIn: ids)
-                          .snapshots(),
-                      builder: (context,
-                          AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                      stream: _newest_podcasts.snapshots(),
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                         if (streamSnapshot.hasData) {
-                          for (int i = 0;
-                              i < streamSnapshot.data!.docs.length;
-                              i++) {
-                            final DocumentSnapshot documentSnapshot =
-                                streamSnapshot.data!.docs[i];
-                            HiveDBNotifications.saveId(documentSnapshot.id);
-                          }
                           return ListView.builder(
                             //physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -79,7 +61,7 @@ class NotificationsWidget extends GetView {
                             itemCount: streamSnapshot.data!.docs.length,
                             itemBuilder: (context, index) {
                               final DocumentSnapshot documentSnapshot =
-                                  streamSnapshot.data!.docs[index];
+                              streamSnapshot.data!.docs[index];
                               return _notificationsWidget(
                                 "${documentSnapshot["name"]}",
                                 "${documentSnapshot["duration"]}",
