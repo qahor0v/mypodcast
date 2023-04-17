@@ -104,34 +104,30 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
           style: const TextStyle(color: Color(0xffBFA054)),
         ),
       ),
-      body: Stack(
-        children: [
-          PDFView(
-            filePath: widget.file.path,
-            //swipeHorizontal: true,
-            pageSnap: false,
-            pageFling: false,
-            autoSpacing: false,
-            //nightMode: true,
-            onRender: (pages) {
-              setState(() {
-                this.pages = pages!;
-              });
+      body: PDFView(
+        filePath: widget.file.path,
+        //swipeHorizontal: true,
+        pageSnap: false,
+        pageFling: false,
+        autoSpacing: false,
+        //nightMode: true,
+        onRender: (pages) {
+          setState(() {
+            this.pages = pages!;
+          });
+        },
+        onViewCreated: (controller) {
+          setState(() {
+            this.controller = controller;
+          });
+        },
+        onPageChanged: (indexPage, _) {
+          setState(
+            () {
+              this.indexPage = indexPage!;
             },
-            onViewCreated: (controller) {
-              setState(() {
-                this.controller = controller;
-              });
-            },
-            onPageChanged: (indexPage, _) {
-              setState(
-                () {
-                  this.indexPage = indexPage!;
-                },
-              );
-            },
-          ),
-        ],
+          );
+        },
       ),
       floatingActionButton: _audioPlayerWidget(),
       floatingActionButtonLocation:
