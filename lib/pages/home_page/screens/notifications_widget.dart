@@ -72,6 +72,7 @@ class NotificationsWidget extends GetView {
                                 "${documentSnapshot["synopsis"]}",
                                 "${documentSnapshot["details"]}",
                                 documentSnapshot.id,
+                                "${documentSnapshot["textLink"]}",
                               );
                             },
                           );
@@ -102,12 +103,14 @@ class NotificationsWidget extends GetView {
       String releaseDate,
       String synopsis,
       String details,
-      String podcastId) {
+      String podcastId,
+      String txt,) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         Get.to(
           BookInfoPage(
+            text: txt,
             name: name,
             duration: duration,
             imageLink: imageLink,
