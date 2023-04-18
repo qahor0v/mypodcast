@@ -59,17 +59,17 @@ class BookInfoPage extends StatelessWidget {
               HiveDatabase.saveId(podcastId!);
               print("SAVED: ${await HiveDatabase.getId(podcastId!)}");
               Get.snackbar(
-                "Added to bookmarks",
-                "You can listen this podcast in bookmark page",
+                "Added to bookmarks".tr,
+                "You can listen this podcast in bookmark page".tr,
                 icon: Icon(IconlyBroken.bookmark, color: Colors.black),
                 snackPosition: SnackPosition.BOTTOM,
               );
             },
           ),
         ],
-        title: const Text(
-          "Podcast Info",
-          style: TextStyle(
+        title: Text(
+          "Podcast Info".tr,
+          style: const TextStyle(
               fontSize: 20,
               color: Color(0xff2F2F2F),
               fontFamily: "PlayfairDisplay-VariableFont",
@@ -337,13 +337,13 @@ class BookInfoPage extends StatelessWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.book),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "Start Reading",
+                            "Start Reading".tr,
                             style: TextStyle(fontSize: 16),
                           ),
                         ],
@@ -374,17 +374,17 @@ class BookInfoPage extends StatelessWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             IconlyBroken.play,
                             color: Color(0xffFBF8F2),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "Play Audio",
-                            style: TextStyle(
+                            "Play Audio".tr,
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Color(0xffFBF8F2),
                             ),

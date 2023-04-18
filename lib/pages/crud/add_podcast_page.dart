@@ -26,6 +26,7 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
   TextEditingController pdfLinkController = TextEditingController();
   TextEditingController audioLinkController = TextEditingController();
   TextEditingController imageLinkController = TextEditingController();
+  TextEditingController textLinkController = TextEditingController();
 
   void _addPodcast() {
     AddPodcastController.selectedDatabaseTableController =
@@ -38,6 +39,7 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
     AddPodcastController.pdfLinkController = pdfLinkController.text;
     AddPodcastController.audioLinkController = audioLinkController.text;
     AddPodcastController.imageLinkController = imageLinkController.text;
+    AddPodcastController.textLinkController = textLinkController.text;
     AddPodcastController.create();
     _makeControllersEmpty();
   }
@@ -51,6 +53,7 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
     pdfLinkController.text = "";
     audioLinkController.text = "";
     imageLinkController.text = "";
+    textLinkController.text = "";
   }
 
   @override
@@ -163,6 +166,16 @@ class _AddPodcastPageState extends State<AddPodcastPage> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Image link',
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextField(
+                controller: textLinkController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Text link',
                 ),
               ),
               const SizedBox(

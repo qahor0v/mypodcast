@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:iconly/iconly.dart';
-import '../../controllers/pdf_opener/pdf_opener.dart';
 
 class AccountPage extends StatefulWidget {
   static const String id = "account_page";
@@ -28,13 +27,14 @@ class _AccountPageState extends State<AccountPage> {
           IconButton(
             icon: const Icon(IconlyBroken.logout, color: Color(0xff2F2F2F)),
             onPressed: () {
-              print("Pressed");
+              var locale1 = const Locale('en', 'US');
+              Get.updateLocale(locale1);
             },
           ),
         ],
-        title: const Text(
-          "Account",
-          style: TextStyle(
+        title: Text(
+          "Account".tr,
+          style: const TextStyle(
               fontSize: 20,
               color: Color(0xff2F2F2F),
               fontFamily: "PlayfairDisplay-VariableFont",
@@ -72,10 +72,50 @@ class _AccountPageState extends State<AccountPage> {
                       flex: 2,
                       child: GestureDetector(
                         onTap: () async {
+                          var locale = const Locale('ru', 'RU');
+                          Get.updateLocale(locale);
+                        },
+                        child: Text(
+                          "Language".tr,
+                          style:
+                              TextStyle(color: Color(0xff2F2F2F), fontSize: 20),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            /// add podcast
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                height: Get.height * 0.08,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Color(0xffF5EFE1),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: const Icon(
+                          Icons.language,
+                          size: 25,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () async {
                           Get.to(AddPodcastPage());
                         },
                         child: const Text(
-                          "Language",
+                          "Add podcast",
                           style:
                               TextStyle(color: Color(0xff2F2F2F), fontSize: 20),
                         ),
@@ -112,9 +152,9 @@ class _AccountPageState extends State<AccountPage> {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          child: const Text(
-                            "Mode",
-                            style: TextStyle(
+                          child: Text(
+                            "Mode".tr,
+                            style: const TextStyle(
                                 color: Color(0xff2F2F2F), fontSize: 20),
                           ),
                         ),
@@ -147,10 +187,10 @@ class _AccountPageState extends State<AccountPage> {
                     Expanded(
                       flex: 2,
                       child: Container(
-                        child: const Text(
-                          "History",
+                        child:  Text(
+                          "History".tr,
                           style:
-                              TextStyle(color: Color(0xff2F2F2F), fontSize: 20),
+                              const TextStyle(color: Color(0xff2F2F2F), fontSize: 20),
                         ),
                       ),
                     ),

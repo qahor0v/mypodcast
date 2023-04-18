@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HiveDBNotifications {
-  
+
   static Box<String> notifications_box = Hive.box<String>("notifications_id");
 
   static Listenable get podcastListenable => notifications_box.listenable();

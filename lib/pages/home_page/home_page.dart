@@ -2,7 +2,7 @@ import 'dart:ui';
 import 'package:ebook_app/pages/home_page/screens/indicator_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/name_of_parts_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/newest_books_builder_widget.dart';
-import 'package:ebook_app/pages/home_page/screens/notifications_badge.dart';
+import 'package:ebook_app/pages/home_page/screens/notifications_badge_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/notifications_widget.dart';
 import 'package:ebook_app/pages/home_page/screens/popular_books_widget.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class HomePage extends GetView {
         elevation: 0,
         backgroundColor: const Color(0xffF5EFE1),
         actions: [
-          NotificationsBadgeWidget(),
+          NotificationsBadge2(),
           IconButton(
             icon: const Icon(IconlyBroken.search, color: Color(0xff2F2F2F)),
             onPressed: () {},
@@ -45,7 +45,7 @@ class HomePage extends GetView {
               //NewestBooksBuilderWidget2(controller: controller),
               NewestBooksBuilderWidget(controller: controller),
               IndicatorWidget(controller: controller),
-              NameOfPartsWidget(name: "Popular Books"),
+              NameOfPartsWidget(name: "Popular Podcasts".tr),
               PopularBooksWidget(),
               
             ],

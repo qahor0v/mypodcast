@@ -18,7 +18,7 @@ class NotificationsBadge2 extends StatefulWidget {
 class _NotificationsBadge2State extends State<NotificationsBadge2> {
   /// variables
   final CollectionReference newest_podcasts =
-      FirebaseFirestore.instance.collection("newest_podcasts");
+  FirebaseFirestore.instance.collection("newest_podcasts");
   var me = HiveDBNotifications.saveOne();
   Iterable<String> ids = HiveDBNotifications.getAllId();
 
@@ -33,25 +33,25 @@ class _NotificationsBadge2State extends State<NotificationsBadge2> {
       builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
         if (streamSnapshot.hasData) {
           return Obx(
-            () => IconButton(
+                () => IconButton(
               icon: vc.isVisible.value
                   ? const Icon(
-                      IconlyBroken.close_square,
-                      color: Colors.red,
-                    )
+                IconlyBroken.close_square,
+                color: Colors.red,
+              )
                   : badges.Badge(
-                      badgeContent: Text(
-                        streamSnapshot.data!.docs.length.toString(),
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      showBadge: streamSnapshot.data!.docs.length.isEqual(0)
-                          ? false
-                          : true,
-                      child: const Icon(
-                        IconlyBroken.notification,
-                        color: Color(0xff2F2F2F),
-                      ),
-                    ),
+                badgeContent: Text(
+                  streamSnapshot.data!.docs.length.toString(),
+                  style: const TextStyle(color: Colors.white),
+                ),
+                showBadge: streamSnapshot.data!.docs.length.isEqual(0)
+                    ? false
+                    : true,
+                child: const Icon(
+                  IconlyBroken.notification,
+                  color: Color(0xff2F2F2F),
+                ),
+              ),
               onPressed: () {
                 vc.changeVisibility();
               },

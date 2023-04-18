@@ -7,7 +7,8 @@ import '../../book_info_page/book_info_page.dart';
 
 class NotificationsWidget extends GetView {
   final CollectionReference _newest_podcasts =
-      FirebaseFirestore.instance.collection("newest_podcasts");
+  FirebaseFirestore.instance.collection("newest_podcasts");
+
 
   NotificationsWidget({Key? key}) : super(key: key);
 
@@ -15,7 +16,7 @@ class NotificationsWidget extends GetView {
   Widget build(BuildContext context) {
     VisibleController vv = Get.put(VisibleController());
     return Obx(
-      () => Visibility(
+          () => Visibility(
         visible: vv.isVisible.value,
         maintainSize: true,
         maintainAnimation: true,
@@ -46,18 +47,12 @@ class NotificationsWidget extends GetView {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      "New podcasts has been added for you!",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
+                     Text("New podcasts has been added for you!".tr,style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                    const SizedBox(height: 5,),
                     StreamBuilder(
                       stream: _newest_podcasts.snapshots(),
-                      builder: (context,
-                          AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                      builder:
+                          (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                         if (streamSnapshot.hasData) {
                           return ListView.builder(
                             //physics: NeverScrollableScrollPhysics(),
@@ -66,7 +61,7 @@ class NotificationsWidget extends GetView {
                             itemCount: streamSnapshot.data!.docs.length,
                             itemBuilder: (context, index) {
                               final DocumentSnapshot documentSnapshot =
-                                  streamSnapshot.data!.docs[index];
+                              streamSnapshot.data!.docs[index];
                               return _notificationsWidget(
                                 "${documentSnapshot["name"]}",
                                 "${documentSnapshot["duration"]}",
@@ -77,7 +72,6 @@ class NotificationsWidget extends GetView {
                                 "${documentSnapshot["synopsis"]}",
                                 "${documentSnapshot["details"]}",
                                 documentSnapshot.id,
-                                "${documentSnapshot["textLink"]}",
                               );
                             },
                           );
@@ -100,17 +94,15 @@ class NotificationsWidget extends GetView {
   }
 
   Widget _notificationsWidget(
-    String name,
-    String duration,
-    String imageLink,
-    String pdfLink,
-    String audioLink,
-    String releaseDate,
-    String synopsis,
-    String details,
-    String podcastId,
-    String textLink,
-  ) {
+      String name,
+      String duration,
+      String imageLink,
+      String pdfLink,
+      String audioLink,
+      String releaseDate,
+      String synopsis,
+      String details,
+      String podcastId) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -124,7 +116,7 @@ class NotificationsWidget extends GetView {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
-            podcastId: podcastId,text: textLink,
+            podcastId: podcastId,
           ),
         );
       },

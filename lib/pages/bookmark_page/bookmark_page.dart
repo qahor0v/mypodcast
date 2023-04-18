@@ -6,6 +6,7 @@ import '../../services/hive_database.dart';
 import '../book_info_page/book_info_page.dart';
 
 class BookmarkPage extends StatefulWidget {
+
   const BookmarkPage({Key? key}) : super(key: key);
 
   @override
@@ -33,9 +34,9 @@ class _BookmarkPageState extends State<BookmarkPage> {
             onPressed: () {},
           ),
         ],
-        title: const Text(
-          "Bookmarks",
-          style: TextStyle(
+        title:  Text(
+          "Bookmarks".tr,
+          style: const TextStyle(
               fontSize: 20,
               color: Color(0xff2F2F2F),
               fontFamily: "PlayfairDisplay-VariableFont",
@@ -73,12 +74,12 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     },
                   );
                 }
-                return const Center(
-                  child: Text('Empty bookmarks'),
+                return  Center(
+                  child: Text('Empty bookmarks'.tr),
                 );
               },
             )
-          : const Center(child: Text('Empty bookmarks')),
+          :  Center(child: Text('Empty bookmarks'.tr)),
     );
   }
 
