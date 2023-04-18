@@ -68,6 +68,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                         "${documentSnapshot["synopsis"]}",
                         "${documentSnapshot["details"]}",
                         documentSnapshot.id,
+                        "${documentSnapshot["textLink"]}",
                       );
                     },
                   );
@@ -82,15 +83,17 @@ class _BookmarkPageState extends State<BookmarkPage> {
   }
 
   Widget _markedBooks(
-      String name,
-      String duration,
-      String imageLink,
-      String pdfLink,
-      String audioLink,
-      String releaseDate,
-      String synopsis,
-      String details,
-      String podcastId) {
+    String name,
+    String duration,
+    String imageLink,
+    String pdfLink,
+    String audioLink,
+    String releaseDate,
+    String synopsis,
+    String details,
+    String podcastId,
+    String txt,
+  ) {
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -104,6 +107,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             synopsis: synopsis,
             details: details,
             podcastId: podcastId,
+            text: txt,
           ),
         );
       },

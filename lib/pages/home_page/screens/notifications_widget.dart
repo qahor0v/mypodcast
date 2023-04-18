@@ -9,7 +9,6 @@ class NotificationsWidget extends GetView {
   final CollectionReference _newest_podcasts =
       FirebaseFirestore.instance.collection("newest_podcasts");
 
-
   NotificationsWidget({Key? key}) : super(key: key);
 
   @override
@@ -47,12 +46,18 @@ class NotificationsWidget extends GetView {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text("New podcasts has been added for you!",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
-                    const SizedBox(height: 5,),
+                    const Text(
+                      "New podcasts has been added for you!",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     StreamBuilder(
                       stream: _newest_podcasts.snapshots(),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
+                      builder: (context,
+                          AsyncSnapshot<QuerySnapshot> streamSnapshot) {
                         if (streamSnapshot.hasData) {
                           return ListView.builder(
                             //physics: NeverScrollableScrollPhysics(),
@@ -72,6 +77,7 @@ class NotificationsWidget extends GetView {
                                 "${documentSnapshot["synopsis"]}",
                                 "${documentSnapshot["details"]}",
                                 documentSnapshot.id,
+                                "${documentSnapshot["textLink"]}",
                               );
                             },
                           );
@@ -94,15 +100,17 @@ class NotificationsWidget extends GetView {
   }
 
   Widget _notificationsWidget(
-      String name,
-      String duration,
-      String imageLink,
-      String pdfLink,
-      String audioLink,
-      String releaseDate,
-      String synopsis,
-      String details,
-      String podcastId) {
+    String name,
+    String duration,
+    String imageLink,
+    String pdfLink,
+    String audioLink,
+    String releaseDate,
+    String synopsis,
+    String details,
+    String podcastId,
+    String textLink,
+  ) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -116,7 +124,7 @@ class NotificationsWidget extends GetView {
             releaseDate: releaseDate,
             synopsis: synopsis,
             details: details,
-            podcastId: podcastId,
+            podcastId: podcastId,text: textLink,
           ),
         );
       },

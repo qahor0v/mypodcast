@@ -47,6 +47,7 @@ class HomePage extends GetView {
               IndicatorWidget(controller: controller),
               NameOfPartsWidget(name: "Popular Books"),
               PopularBooksWidget(),
+              
             ],
           ),
           NotificationsWidget(),

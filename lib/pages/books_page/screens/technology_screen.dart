@@ -34,7 +34,7 @@ class TechnologyScreen extends StatelessWidget {
                     "${documentSnapshot["synopsis"]}",
                     "${documentSnapshot["details"]}",
                     "${documentSnapshot.id}",
-
+                    "${documentSnapshot["textLink"]}",
                   );
                 },
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,18 +55,22 @@ class TechnologyScreen extends StatelessWidget {
   }
 
   Widget _buildPodcastCard(
-      String name,
-      String duration,
-      String imageLink,
-      String pdfLink,
-      String audioLink,
-      String releaseDate,
-      String synopsis,
-      String details, String podcastId) {
+    String name,
+    String duration,
+    String imageLink,
+    String pdfLink,
+    String audioLink,
+    String releaseDate,
+    String synopsis,
+    String details,
+    String podcastId,
+    String txt,
+  ) {
     return GestureDetector(
       onTap: () {
         Get.to(
           BookInfoPage(
+            text: txt,
             name: name,
             duration: duration,
             imageLink: imageLink,

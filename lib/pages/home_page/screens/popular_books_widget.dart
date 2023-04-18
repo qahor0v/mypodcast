@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ebook_app/pages/book_info_page/book_info_page.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +19,7 @@ class PopularBooksWidget extends StatelessWidget {
         stream: _newest_podcasts.snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> streamSnapshot) {
           if (streamSnapshot.hasData) {
+            //    log(streamSnapshot.data.toString());
             return ListView.builder(
               physics: NeverScrollableScrollPhysics(),
               scrollDirection: Axis.vertical,
@@ -25,6 +28,7 @@ class PopularBooksWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 final DocumentSnapshot documentSnapshot =
                     streamSnapshot.data!.docs[index];
+                log(">>>>>>>>>> $documentSnapshot <<<");
                 return _topBooksWidget(
                   "${documentSnapshot["name"]}",
                   "${documentSnapshot["duration"]}",
@@ -35,6 +39,7 @@ class PopularBooksWidget extends StatelessWidget {
                   "${documentSnapshot["synopsis"]}",
                   "${documentSnapshot["details"]}",
                   documentSnapshot.id,
+                  "${documentSnapshot["textLink"]}",
                 );
               },
             );
@@ -50,15 +55,17 @@ class PopularBooksWidget extends StatelessWidget {
   }
 
   Widget _topBooksWidget(
-      String name,
-      String duration,
-      String imageLink,
-      String pdfLink,
-      String audioLink,
-      String releaseDate,
-      String synopsis,
-      String details,
-      String podcastId) {
+    String name,
+    String duration,
+    String imageLink,
+    String pdfLink,
+    String audioLink,
+    String releaseDate,
+    String synopsis,
+    String details,
+    String podcastId,
+    String textLink,
+  ) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -73,6 +80,7 @@ class PopularBooksWidget extends StatelessWidget {
             synopsis: synopsis,
             details: details,
             podcastId: podcastId,
+            text: textLink,
           ),
         );
       },

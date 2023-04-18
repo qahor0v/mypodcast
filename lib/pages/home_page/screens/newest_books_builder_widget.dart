@@ -40,6 +40,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                     return _newestBooksView(
                       "${documentSnapshot["name"]}",
                       "${documentSnapshot["duration"]}",
+                      "${documentSnapshot["textLink"]}",
                       "${documentSnapshot["imageLink"]}",
                       "${documentSnapshot["pdfLink"]}",
                       "${documentSnapshot["audioLink"]}",
@@ -47,6 +48,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                       "${documentSnapshot["synopsis"]}",
                       "${documentSnapshot["details"]}",
                       "${documentSnapshot.id}",
+
                     );
                   },
                   controller: controller,
@@ -66,6 +68,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
   Widget _newestBooksView(
       String name,
       String duration,
+      String txt,
       String imageLink,
       String pdfLink,
       String audioLink,
@@ -93,6 +96,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
           onTap: () {
             Get.to(BookInfoPage(
               name: name,
+              text: txt,
               duration: duration,
               imageLink: imageLink,
               pdfLink: pdfLink,

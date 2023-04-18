@@ -20,6 +20,7 @@ class BookInfoPage extends StatelessWidget {
   String? synopsis;
   String? details;
   String? podcastId;
+  String? text;
 
   BookInfoPage({
     Key? key,
@@ -32,6 +33,7 @@ class BookInfoPage extends StatelessWidget {
     required this.synopsis,
     required this.details,
     required this.podcastId,
+    required this.text,
   }) : super(key: key);
 
   @override
@@ -355,15 +357,14 @@ class BookInfoPage extends StatelessWidget {
                 Expanded(
                   child: GestureDetector(
                     onTap: () async {
-                      complated.value = false;
-                      PDFOpener.url = pdfLink;
                       Get.to(
                         AudioWithPdfPage(
-                          file: await PDFOpener.openMe(),
+                          title: name ?? "",
+                          txtUrl:
+                              'https://firebasestorage.googleapis.com/v0/b/fluttuzlogin.appspot.com/o/test_files%2Fleonardo.txt?alt=media&token=7a9e9efe-7ae7-429f-8649-818c91e76a32',
                           audioLink: await audioLink.toString(),
                         ),
                       );
-                      complated.value = true;
                     },
                     child: Container(
                       height: 50,
