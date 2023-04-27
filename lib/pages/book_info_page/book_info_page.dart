@@ -237,7 +237,7 @@ class BookInfoPage extends StatelessWidget {
 
                         left: 10,
                       ),
-                    ).paddingOnly(bottom: 10);
+                    ).paddingOnly(bottom: 102);
                   },
                 ).paddingOnly(bottom: 50),
               )
