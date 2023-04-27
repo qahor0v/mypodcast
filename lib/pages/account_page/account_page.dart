@@ -114,8 +114,8 @@ class _AccountPageState extends State<AccountPage> {
                         onTap: () async {
                           Get.to(AddPodcastPage());
                         },
-                        child: const Text(
-                          "Add podcast",
+                        child:  Text(
+                          "Add podcast".tr,
                           style:
                               TextStyle(color: Color(0xff2F2F2F), fontSize: 20),
                         ),
