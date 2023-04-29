@@ -1,7 +1,5 @@
 import 'dart:ui';
 import 'package:ebook_app/constanta.dart';
-import 'package:ebook_app/pages/book_info_page/screens/details_screen.dart';
-import 'package:ebook_app/pages/book_info_page/screens/synopsis_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
@@ -237,7 +235,7 @@ class BookInfoPage extends StatelessWidget {
 
                         left: 10,
                       ),
-                    ).paddingOnly(bottom: 102);
+                    ).paddingOnly(bottom: 5);
                   },
                 ).paddingOnly(bottom: 50),
               )
