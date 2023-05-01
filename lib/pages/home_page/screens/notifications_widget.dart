@@ -73,6 +73,7 @@ class NotificationsWidget extends GetView {
                                 "${documentSnapshot["details"]}",
                                 documentSnapshot.id,
                                 "${documentSnapshot["textLink"]}",
+                                "${documentSnapshot["vocabularyLink"]}",
                               );
                             },
                           );
@@ -104,6 +105,7 @@ class NotificationsWidget extends GetView {
       String synopsis,
       String details,
       String podcastId,
+      String vocabularyLink,
       String txt,) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -120,6 +122,7 @@ class NotificationsWidget extends GetView {
             synopsis: synopsis,
             details: details,
             podcastId: podcastId,
+            vocabularyLink: vocabularyLink,
           ),
         );
       },

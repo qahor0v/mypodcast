@@ -47,6 +47,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
                       "${documentSnapshot["releaseDate"]}",
                       "${documentSnapshot["synopsis"]}",
                       "${documentSnapshot["details"]}",
+                      "${documentSnapshot["vocabularyLink"]}",
                       "${documentSnapshot.id}",
 
                     );
@@ -75,6 +76,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
       String releaseDate,
       String synopsis,
       String details,
+      String vocabularyLink,
       String podcastId) {
     return Stack(
       children: [
@@ -105,6 +107,7 @@ class NewestBooksBuilderWidget extends StatelessWidget {
               synopsis: synopsis,
               details: details,
               podcastId: podcastId,
+              vocabularyLink: vocabularyLink,
             ));
           },
           child: Container(

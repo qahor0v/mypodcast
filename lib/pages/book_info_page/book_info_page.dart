@@ -1,15 +1,15 @@
 import 'dart:ui';
-import 'package:ebook_app/constanta.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:super_rich_text/super_rich_text.dart';
 import '../../controllers/pdf_opener/pdf_opener.dart';
 import '../../services/hive_database.dart';
 import '../audio_with_pdf_page/audio_with_pdf_viewer_page.dart';
 import '../pdf_viewer_page/pdf_viewer_page.dart';
 
-class BookInfoPage extends StatelessWidget {
-  var complated = true.obs;
+class BookInfoPage extends StatefulWidget {
   String? name;
   String? duration;
   String? imageLink;
@@ -20,412 +20,301 @@ class BookInfoPage extends StatelessWidget {
   String? details;
   String? podcastId;
   String? text;
+  final vocabularyLink;
 
-  BookInfoPage({
-    Key? key,
-    required this.name,
-    required this.duration,
-    required this.imageLink,
-    required this.pdfLink,
-    required this.audioLink,
-    required this.releaseDate,
-    required this.synopsis,
-    required this.details,
-    required this.podcastId,
-    required this.text,
-  }) : super(key: key);
+  BookInfoPage(
+      {Key? key,
+      required this.name,
+      required this.duration,
+      required this.imageLink,
+      required this.pdfLink,
+      required this.audioLink,
+      required this.releaseDate,
+      required this.synopsis,
+      required this.details,
+      required this.podcastId,
+      required this.text,
+      required this.vocabularyLink})
+      : super(key: key);
+
+  @override
+  State<BookInfoPage> createState() => _BookInfoPageState();
+}
+
+class _BookInfoPageState extends State<BookInfoPage> {
+  var complated = true.obs;
+  List listVocabulary = [];
+  String text = '';
+  bool loading = true;
+
+  Future<void> getVocabularyText() async {
+    Dio dio = Dio();
+    final response = await dio.get(
+      widget.vocabularyLink.toString(),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        text = response.data;
+        listVocabulary.addAll(text.split(";"));
+        loading = false;
+      });
+      print(
+          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<$listVocabulary>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+    } else {
+      print('Have arror');
+    }
+  }
+
+  @override
+  void initState() {
+    getVocabularyText();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List listWord = TextString().words.split(";");
+    if (loading) {
+      return Container(
+        color: Color(0xffBFA054),
 
-    return Scaffold(
-      backgroundColor: const Color(0xffFBF8F2),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: const Color(0xffFBF8F2),
-        leading: IconButton(
-          icon: const Icon(
-            IconlyBroken.arrow_left,
-            color: Color(0xff2F2F2F),
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Colors.black,
           ),
-          onPressed: () {
-            Get.back();
-          },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(IconlyBroken.bookmark, color: Color(0xff2F2F2F)),
-            onPressed: () async {
-              HiveDatabase.saveId(podcastId!);
-              print("SAVED: ${await HiveDatabase.getId(podcastId!)}");
-              Get.snackbar(
-                "Added to bookmarks".tr,
-                "You can listen this podcast in bookmark page".tr,
-                icon: const Icon(IconlyBroken.bookmark, color: Colors.black),
-                snackPosition: SnackPosition.BOTTOM,
-              );
+      );
+    } else {
+      return Scaffold(
+        backgroundColor: const Color(0xffFBF8F2),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: const Color(0xffFBF8F2),
+          leading: IconButton(
+            icon: const Icon(
+              IconlyBroken.arrow_left,
+              color: Color(0xff2F2F2F),
+            ),
+            onPressed: () {
+              Get.back();
             },
           ),
-        ],
-        title: Text(
-          "Podcast Info".tr,
-          style: const TextStyle(
-              fontSize: 20,
-              color: Color(0xff2F2F2F),
-              fontFamily: "PlayfairDisplay-VariableFont",
-              fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
-      body: Stack(
-        children: [
-          Column(
-            children: [
-              Container(
-                width: Get.width,
-                height: Get.height * 0.28,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(imageLink!),
-                      fit: BoxFit.cover,
-                    )),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              Text(
-                name!,
-                style: const TextStyle(
-                    fontSize: 22,
-                    color: Color(0xff2F2F2F),
-                    fontFamily: "PlayfairDisplay-VariableFont",
-                    fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "By Michael Crudden",
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Color(0xff2F2F2F),
-                    ),
-                  ),
-                  Text(
-                    duration!,
-                    style: const TextStyle(
-                        fontSize: 18,
-                        color: Color(0xff2F2F2F),
-                        fontFamily: "PlayfairDisplay-VariableFont",
-                        fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    height: 70,
-                    width: Get.width * 0.27,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          width: 1.5, color: const Color(0xffBFA054)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Text(
-                          "Released",
-                          style: TextStyle(color: Colors.black54, fontSize: 16),
-                        ),
-                        Text(
-                          releaseDate!,
-                          style: const TextStyle(
-                              color: Color(0xff2F2F2F),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    height: 70,
-                    width: Get.width * 0.27,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          width: 1.5, color: const Color(0xffBFA054)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text(
-                          "Part",
-                          style: TextStyle(color: Colors.black54, fontSize: 16),
-                        ),
-                        Text(
-                          "16",
-                          style: TextStyle(
-                              color: Color(0xff2F2F2F),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    height: 70,
-                    width: Get.width * 0.27,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          width: 1.5, color: const Color(0xffBFA054)),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        Text(
-                          "Pages",
-                          style: TextStyle(color: Colors.black54, fontSize: 16),
-                        ),
-                        Text(
-                          "340",
-                          style: TextStyle(
-                              color: Color(0xff2F2F2F),
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: listWord.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      padding: const EdgeInsets.all(8),
-                      width: Get.width * 0.27,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                            width: 1.5, color: const Color(0xffBFA054)),
-                      ),
-                      child:  Text(
-                        "${listWord[index]}",
-                        maxLines: 2,
-                      ).paddingOnly(
-
-                        left: 10,
-                      ),
-                    ).paddingOnly(bottom: 5);
-                  },
-                ).paddingOnly(bottom: 50),
-              )
-            ],
-          ).paddingOnly(right: 15, left: 15, top: 10, bottom: 10),
-          Obx(
-            () => Container(
-              child: complated.value
-                  ? const SizedBox.shrink()
-                  : const Center(
-                      child: CircularProgressIndicator(
-                      color: Color(0xffBFA054),
-                    )),
+          actions: [
+            IconButton(
+              icon: const Icon(IconlyBroken.bookmark, color: Color(0xff2F2F2F)),
+              onPressed: () async {
+                HiveDatabase.saveId(widget.podcastId!);
+                print("SAVED: ${await HiveDatabase.getId(widget.podcastId!)}");
+                Get.snackbar(
+                  "Added to bookmarks".tr,
+                  "You can listen this podcast in bookmark page".tr,
+                  icon: const Icon(IconlyBroken.bookmark, color: Colors.black),
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+              },
             ),
+          ],
+          title: Text(
+            "Podcast Info".tr,
+            style: const TextStyle(
+                fontSize: 20,
+                color: Color(0xff2F2F2F),
+                fontFamily: "PlayfairDisplay-VariableFont",
+                fontWeight: FontWeight.bold),
           ),
-        ],
-      ),
-      floatingActionButton: _bookInfoNavBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-    );
+          centerTitle: true,
+        ),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Container(
+                  width: Get.width,
+                  height: Get.height * 0.28,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.imageLink!),
+                        fit: BoxFit.cover,
+                      )),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                Text(
+                  widget.name!,
+                  style: const TextStyle(
+                      fontSize: 22,
+                      color: Color(0xff2F2F2F),
+                      fontFamily: "PlayfairDisplay-VariableFont",
+                      fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "By Michael Crudden",
+                      style: TextStyle(
+                        fontSize: 17,
+                        color: Color(0xff2F2F2F),
+                      ),
+                    ),
+                    Text(
+                      widget.duration!,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Color(0xff2F2F2F),
+                          fontFamily: "PlayfairDisplay-VariableFont",
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Container(
+                //       padding: const EdgeInsets.all(8),
+                //       height: 70,
+                //       width: Get.width * 0.27,
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         border: Border.all(
+                //             width: 1.5, color: const Color(0xffBFA054)),
+                //       ),
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: [
+                //           const Text(
+                //             "Released",
+                //             style: TextStyle(color: Colors.black54, fontSize: 16),
+                //           ),
+                //           Text(
+                //             widget.releaseDate!,
+                //             style: const TextStyle(
+                //                 color: Color(0xff2F2F2F),
+                //                 fontSize: 18,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.all(8),
+                //       height: 70,
+                //       width: Get.width * 0.27,
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         border: Border.all(
+                //             width: 1.5, color: const Color(0xffBFA054)),
+                //       ),
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: const [
+                //           Text(
+                //             "Part",
+                //             style: TextStyle(color: Colors.black54, fontSize: 16),
+                //           ),
+                //           Text(
+                //             "16",
+                //             style: TextStyle(
+                //                 color: Color(0xff2F2F2F),
+                //                 fontSize: 18,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.all(8),
+                //       height: 70,
+                //       width: Get.width * 0.27,
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(10),
+                //         border: Border.all(
+                //             width: 1.5, color: const Color(0xffBFA054)),
+                //       ),
+                //       child: Column(
+                //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //         children: const [
+                //           Text(
+                //             "Pages",
+                //             style: TextStyle(color: Colors.black54, fontSize: 16),
+                //           ),
+                //           Text(
+                //             "340",
+                //             style: TextStyle(
+                //                 color: Color(0xff2F2F2F),
+                //                 fontSize: 18,
+                //                 fontWeight: FontWeight.bold),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+                const SizedBox(
+                  height: 50,
+                  child: Center(
+                    child: Text(
+                      "Vocabulary",
+                      style: TextStyle(fontSize: 20, color: Color(0xffBFA054)),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: listVocabulary.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: const EdgeInsets.all(8),
+                        width: Get.width * 0.27,
+                        child: SuperRichText(
+                          // style: const TextStyle(
+                          //   color:
+                          // ),
+                          useGlobalMarkers: false,
+                          text: listVocabulary[index],
+                          maxLines: 2,
+                          othersMarkers: [
+                            MarkerText(
+                              marker: "//",
+                              style: const TextStyle(
+                                  fontSize: 18, color: Color(0xffBFA054)),
+                            )
+                          ],
+                        ).paddingOnly(
+                          left: 10,
+                        ),
+                      ).paddingOnly(bottom: 5);
+                    },
+                  ).paddingOnly(bottom: 50),
+                )
+              ],
+            ).paddingOnly(right: 15, left: 15, top: 10, bottom: 10),
+            Obx(
+              () => Container(
+                child: complated.value
+                    ? const SizedBox.shrink()
+                    : const Center(
+                        child: CircularProgressIndicator(
+                        color: Color(0xffBFA054),
+                      )),
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: _bookInfoNavBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      );
+    }
   }
-
-  // Widget _bookInfos() {
-  //   return DefaultTabController(
-  //     length: 2,
-  //     initialIndex: 0,
-  //     child: SliverToBoxAdapter(
-  //       child: Padding(
-  //         padding:
-  //             const EdgeInsets.only(right: 15, left: 15, top: 10, bottom: 10),
-  //         child: ClipRRect(
-  //           //borderRadius: BorderRadius.circular(15),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Container(
-  //                 width: Get.width,
-  //                 height: Get.height * 0.28,
-  //                 decoration: BoxDecoration(
-  //                     borderRadius: BorderRadius.circular(10),
-  //                     image: DecorationImage(
-  //                       image: NetworkImage(imageLink!),
-  //                       fit: BoxFit.cover,
-  //                     )),
-  //               ),
-  //               const SizedBox(
-  //                 height: 25,
-  //               ),
-  //               Text(
-  //                 name!,
-  //                 style: const TextStyle(
-  //                     fontSize: 22,
-  //                     color: Color(0xff2F2F2F),
-  //                     fontFamily: "PlayfairDisplay-VariableFont",
-  //                     fontWeight: FontWeight.bold),
-  //               ),
-  //               const SizedBox(
-  //                 height: 5,
-  //               ),
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   const Text(
-  //                     "By Michael Crudden",
-  //                     style: TextStyle(
-  //                       fontSize: 17,
-  //                       color: Color(0xff2F2F2F),
-  //                     ),
-  //                   ),
-  //                   Text(
-  //                     duration!,
-  //                     style: const TextStyle(
-  //                         fontSize: 18,
-  //                         color: Color(0xff2F2F2F),
-  //                         fontFamily: "PlayfairDisplay-VariableFont",
-  //                         fontWeight: FontWeight.bold),
-  //                   ),
-  //                 ],
-  //               ),
-  //               const SizedBox(
-  //                 height: 30,
-  //               ),
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   Container(
-  //                     padding: const EdgeInsets.all(8),
-  //                     height: 70,
-  //                     width: Get.width * 0.27,
-  //                     decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(10),
-  //                       border: Border.all(
-  //                           width: 1.5, color: const Color(0xffBFA054)),
-  //                     ),
-  //                     child: Column(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                       children: [
-  //                         const Text(
-  //                           "Released",
-  //                           style:
-  //                               TextStyle(color: Colors.black54, fontSize: 16),
-  //                         ),
-  //                         Text(
-  //                           releaseDate!,
-  //                           style: const TextStyle(
-  //                               color: Color(0xff2F2F2F),
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   Container(
-  //                     padding: const EdgeInsets.all(8),
-  //                     height: 70,
-  //                     width: Get.width * 0.27,
-  //                     decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(10),
-  //                       border: Border.all(
-  //                           width: 1.5, color: const Color(0xffBFA054)),
-  //                     ),
-  //                     child: Column(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                       children: const [
-  //                         Text(
-  //                           "Part",
-  //                           style:
-  //                               TextStyle(color: Colors.black54, fontSize: 16),
-  //                         ),
-  //                         Text(
-  //                           "16",
-  //                           style: TextStyle(
-  //                               color: Color(0xff2F2F2F),
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                   Container(
-  //                     padding: const EdgeInsets.all(8),
-  //                     height: 70,
-  //                     width: Get.width * 0.27,
-  //                     decoration: BoxDecoration(
-  //                       borderRadius: BorderRadius.circular(10),
-  //                       border: Border.all(
-  //                           width: 1.5, color: const Color(0xffBFA054)),
-  //                     ),
-  //                     child: Column(
-  //                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //                       children: const [
-  //                         Text(
-  //                           "Pages",
-  //                           style:
-  //                               TextStyle(color: Colors.black54, fontSize: 16),
-  //                         ),
-  //                         Text(
-  //                           "340",
-  //                           style: TextStyle(
-  //                               color: Color(0xff2F2F2F),
-  //                               fontSize: 18,
-  //                               fontWeight: FontWeight.bold),
-  //                         ),
-  //                       ],
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               const SizedBox(
-  //                 height: 30,
-  //               ),
-  //               SizedBox(
-  //                 height: 650,
-  //                 child: TabBarView(
-  //                   children: [
-  //                     SynopsisScreen(synopsisText: synopsis),
-  //                     DetailsScreen(detailsText: details),
-  //                   ],
-  //                 ),
-  //               ),
-  //               const SizedBox(
-  //                 height: 60,
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   /// nav bar for this page => for "Start  Reading" and "Play Audio" buttons
   Widget _bookInfoNavBar() {
@@ -457,7 +346,7 @@ class BookInfoPage extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () async {
                       complated.value = false;
-                      PDFOpener.url = pdfLink;
+                      PDFOpener.url = widget.pdfLink;
                       Get.to(
                         PDFViewerPage(
                           file: await PDFOpener.openMe(),
@@ -495,10 +384,10 @@ class BookInfoPage extends StatelessWidget {
                     onTap: () async {
                       Get.to(
                         AudioWithPdfPage(
-                          title: name ?? "",
+                          title: widget.name ?? "",
                           txtUrl:
                               'https://firebasestorage.googleapis.com/v0/b/fluttuzlogin.appspot.com/o/test_files%2Fleonardo.txt?alt=media&token=7a9e9efe-7ae7-429f-8649-818c91e76a32',
-                          audioLink: await audioLink.toString(),
+                          audioLink: await widget.audioLink.toString(),
                         ),
                       );
                     },

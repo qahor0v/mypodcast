@@ -70,6 +70,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
                         "${documentSnapshot["details"]}",
                         documentSnapshot.id,
                         "${documentSnapshot["textLink"]}",
+                        "${documentSnapshot["vocabularyLink"]}",
                       );
                     },
                   );
@@ -94,6 +95,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
     String details,
     String podcastId,
     String txt,
+    String vocabularyLink,
   ) {
     return GestureDetector(
       onTap: () {
@@ -109,6 +111,7 @@ class _BookmarkPageState extends State<BookmarkPage> {
             details: details,
             podcastId: podcastId,
             text: txt,
+            vocabularyLink: vocabularyLink,
           ),
         );
       },
