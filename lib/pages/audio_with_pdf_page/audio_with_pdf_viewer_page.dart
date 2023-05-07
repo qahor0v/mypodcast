@@ -36,6 +36,7 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
   List<Chapters> chapters = [];
   bool isLoading = true;
   final _scrollController = ScrollController();
+
   void _scrollListener() {
     setState(() {});
   }
@@ -127,11 +128,11 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
                             bool isReaded = false;
                             if (snapshot.data!.duration != null) {
                               Future.delayed(Duration.zero, () {
-                                 _scrollController.animateTo(
-                                chapters[index].start /
-                                    snapshot.data!.duration!.inSeconds,
-                                duration: Duration.zero,
-                                curve: Curves.linear);
+                                _scrollController.animateTo(
+                                    chapters[index].start /
+                                        snapshot.data!.duration!.inSeconds,
+                                    duration: Duration.zero,
+                                    curve: Curves.linear);
                               });
                             }
                             if (index != chapters.length - 1) {
@@ -262,13 +263,15 @@ class _AudioWithPdfPageState extends State<AudioWithPdfPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+
+                          },
                           icon: const Icon(
                             IconlyBroken.arrow_left_circle,
                             size: 40,
                           ),
                         ),
-                         Text("10 sec".tr),
+                        Text("10 sec".tr),
                       ],
                     ),
                   ),

@@ -6,7 +6,6 @@ import '../../services/hive_database.dart';
 import '../book_info_page/book_info_page.dart';
 
 class BookmarkPage extends StatefulWidget {
-
   const BookmarkPage({Key? key}) : super(key: key);
 
   @override
@@ -31,10 +30,17 @@ class _BookmarkPageState extends State<BookmarkPage> {
         actions: [
           IconButton(
             icon: const Icon(IconlyBroken.search, color: Color(0xff2F2F2F)),
-            onPressed: () {},
+            onPressed: () {
+              Get.snackbar(
+                "Not available yet".tr,
+                "",
+                icon: const Icon(IconlyBroken.danger, color: Colors.black),
+                snackPosition: SnackPosition.BOTTOM,
+              );
+            },
           ),
         ],
-        title:  Text(
+        title: Text(
           "Bookmarks".tr,
           style: const TextStyle(
               fontSize: 20,
@@ -75,12 +81,12 @@ class _BookmarkPageState extends State<BookmarkPage> {
                     },
                   );
                 }
-                return  Center(
+                return Center(
                   child: Text('Empty bookmarks'.tr),
                 );
               },
             )
-          :  Center(child: Text('Empty bookmarks'.tr)),
+          : Center(child: Text('Empty bookmarks'.tr)),
     );
   }
 
@@ -151,7 +157,6 @@ class _BookmarkPageState extends State<BookmarkPage> {
                       const SizedBox(
                         height: 3,
                       ),
-                      const Text("Derek Collins"),
                       const SizedBox(
                         height: 3,
                       ),
