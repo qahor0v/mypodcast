@@ -9,7 +9,7 @@
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="mypodcast"
+        android:label="audiobook_player"
         android:usesCleartextTraffic="true">
 
         <activity
